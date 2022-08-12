@@ -1,0 +1,48 @@
+## Wikipedia Search Robot ##
+## Created by VTank01 ##
+## This program will search terms on wikipedia. Error will show If term is not found/multiple results ##
+
+
+import wikipedia
+from wikipedia import summary
+import tkinter
+import tkinter as tk
+from tkinter import ttk
+from tkinter import *
+from tkinter.messagebox import showerror
+
+#################################################
+
+root = tk.Tk()
+root.geometry('750x600')
+root.resizable(False, False)
+root.configure(bg="dark grey") # set background colour of window
+root.title("Wikipedia Search")
+label = ttk.Label(root, text= "I am a Search Bot, what can I search for you?",  font=("Helvetica", 20))
+label.pack(padx=5, pady=12)
+search_entry = ttk.Entry(root, width= 40)
+search_entry.pack(padx=0, pady=10, ipady=2)
+search_input = search_entry.get()
+
+text = tk.Text(root, font=("Arial", 15), fg="Black",
+              width=50, height=15, bd=10)
+text.pack(side=BOTTOM)
+
+def wiki_summery():
+    try:
+        text.delete(1.0, END)
+        text.insert(INSERT, summary(search_entry.get(), sentences=2, auto_suggest= False))
+        # if any it will give error, it will be shown in a new error window
+    except Exception as error:
+        
+      # this will show the error
+        showerror("Error", error)
+
+photo = PhotoImage(file = r"C:\\WIKIBOT\\robot_images.png")
+# Resizing image to fit on button
+photoimage = photo.subsample(4, 4)
+
+button = Button(root, text= 'Click Me!', bg= 'yellow' ,font ='arial 45', image = photoimage,
+                    compound = LEFT, command= wiki_summery)
+button.pack(side= TOP, padx=15, pady=15, ipady=10)
+root.mainloop()
